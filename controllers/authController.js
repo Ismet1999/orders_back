@@ -3,14 +3,14 @@ const { Users } = require("./../models/models");
 const jwt = require("jsonwebtoken");
 
 function generateAccessToken(username) {
-  let accesstoken = jwt.sign(username, process.env.TOKEN_SECRET, {
+  let accessToken = jwt.sign(username, process.env.TOKEN_SECRET, {
     expiresIn: "1800s",
   });
   let refreshToken = jwt.sign(username, process.env.TOKEN_SECRET, {
     expiresIn: "3600s",
   });
   return {
-    accesstoken,
+    accessToken,
     refreshToken,
   };
 }
@@ -21,6 +21,8 @@ class AuthController {
       await Users.findOne({
         where: { name: req.body.name, password: req.body.password },
       }).then(async (user) => {
+        console.log("user", user.name);
+
         let tokens = generateAccessToken({ name: user.name });
         res.json(tokens);
       });

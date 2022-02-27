@@ -19,9 +19,11 @@ class OrdersController {
   async create(req, res, next) {
     try {
       let order = {
-        photo: req.file.path,
         ...req.body,
       };
+      if (req.file.path) {
+        order.photo = req.file.path;
+      }
       await Orders.create(order).then((ord) => res.json(ord));
     } catch (err) {
       next(new ApiError(err.message, 500));
@@ -40,7 +42,7 @@ class OrdersController {
       let order = {
         ...req.body,
       };
-      if (req.file.path) {
+      if (req.file && req.file.path) {
         order.photo = req.file.path;
       }
       let ord = await Orders.update(order, {
