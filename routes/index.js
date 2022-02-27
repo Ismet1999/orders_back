@@ -8,7 +8,7 @@ const statusesRouter = require("./statuses");
 const authenticateToken = require("./../middlewares/authMiddleware.js");
 
 router.use("/auth", authRouter);
-router.use("/users", authenticateToken, userRouter);
+router.use("/users", userRouter);
 router.use("/orders", authenticateToken, ordersRouter);
 router.use("/statuses", authenticateToken, statusesRouter);
 
