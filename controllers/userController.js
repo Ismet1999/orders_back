@@ -1,4 +1,4 @@
-const ApiError = require("../error/apiError");
+const ApiError = require("../error/ApiError");
 const { Users } = require("./../models/models");
 class UserController {
   async getAll(req, res, next) {

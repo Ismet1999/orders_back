@@ -1,4 +1,4 @@
-const ApiError = require("../error/apiError");
+const ApiError = require("../error/ApiError");
 const { Statuses } = require("./../models/models");
 
 class StatusesController {
@@ -26,7 +26,9 @@ class StatusesController {
   }
   async edit(req, res, next) {
     try {
-      let status = await Statuses.update(req.body, { where: { id: req.params.id } });
+      let status = await Statuses.update(req.body, {
+        where: { id: req.params.id },
+      });
       res.json(status);
     } catch (err) {
       next(new ApiError(err.message, 500));

@@ -1,5 +1,5 @@
-const ApiError = require("../error/apiError");
-const { Users } = require("./../models/models"); 
+const ApiError = require("../error/ApiError");
+const { Users } = require("./../models/models");
 class UserController {
   async get(req, res, next) {
     try {
