@@ -1,11 +1,15 @@
 const Router = require("express");
 const router = new Router();
+const authRouter = require("./auth");
 const userRouter = require("./user");
 const ordersRouter = require("./orders");
 const statusesRouter = require("./statuses");
 
-router.use("/users", userRouter);
-router.use("/orders", ordersRouter);
-router.use("/statuses", statusesRouter);
+const authenticateToken = require("./../middlewares/authMiddleware.js");
+
+router.use("/auth", authRouter);
+router.use("/users", authenticateToken, userRouter);
+router.use("/orders", authenticateToken, ordersRouter);
+router.use("/statuses", authenticateToken, statusesRouter);
 
 module.exports = router;

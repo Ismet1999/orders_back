@@ -4,13 +4,10 @@ const { Orders, Statuses } = require("./../models/models");
 class OrdersController {
   async getAll(req, res, next) {
     try {
-      console.log("__dirname ", "./../static/images/");
-
       await Orders.findAll({
         include: [
           {
             model: Statuses,
-            attributes: ["id", "title", "color"],
             as: "status",
           },
         ],
@@ -21,12 +18,11 @@ class OrdersController {
   }
   async create(req, res, next) {
     try {
-      console.log("req.file", JSON.stringify(req.file));
       let order = {
         photo: req.file.path,
         ...req.body,
       };
-      await Orders.create(order).then((order) => res.json(order));
+      await Orders.create(order).then((ord) => res.json(ord));
     } catch (err) {
       next(new ApiError(err.message, 500));
     }
@@ -41,10 +37,16 @@ class OrdersController {
   }
   async edit(req, res, next) {
     try {
-      let order = await Orders.update(req.body, {
+      let order = {
+        ...req.body,
+      };
+      if (req.file.path) {
+        order.photo = req.file.path;
+      }
+      let ord = await Orders.update(order, {
         where: { id: req.params.id },
       });
-      res.json(order);
+      res.json(ord);
     } catch (err) {
       next(new ApiError(err.message, 500));
     }
