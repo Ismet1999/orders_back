@@ -1,19 +1,33 @@
 const ApiError = require("../error/ApiError");
 const { Orders, Statuses } = require("./../models/models");
+const { Op } = require("sequelize");
 
 class OrdersController {
   async getAll(req, res, next) {
     try {
-      await Orders.findAll({
-        include: [
-          {
-            model: Statuses,
-            as: "status",
+      let { search } = req.query;
+      let orders;
+      let include = [
+        {
+          model: Statuses,
+          as: "status",
+        },
+      ];
+      if (search) {
+        orders = await Orders.findAll({
+          where: {
+            phone: {
+              [Op.like]: `%${search}%`,
+            },
           },
-        ],
-      }).then((orders) => res.json(orders));
+          include,
+        });
+      } else {
+        orders = await Orders.findAll({ include });
+      }
+      res.json(orders);
     } catch (err) {
-      next(new ApiError(err.message, 500));
+      next(err);
     }
   }
   async create(req, res, next) {

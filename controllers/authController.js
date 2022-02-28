@@ -22,8 +22,7 @@ class AuthController {
         where: { name: req.body.name, password: req.body.password },
       }).then(async (user) => {
         console.log("user", user.name);
-
-        let tokens = generateAccessToken({ name: user.name });
+        let tokens = generateAccessToken({ name: user.name, role: user.role });
         res.json(tokens);
       });
     } catch (err) {
