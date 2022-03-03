@@ -10,7 +10,7 @@ const Orders = sequelize.define("orders", {
   phone: { type: DataTypes.STRING(13) },
   inputDate: { type: DataTypes.DATE, allowNull: false },
   outputDate: { type: DataTypes.DATE, allowNull: false },
-  photo: { type: DataTypes.STRING(255), allowNull: false },
+  photo: { type: DataTypes.STRING(255) },
   price: { type: DataTypes.INTEGER, allowNull: false },
   prepayment: { type: DataTypes.INTEGER, allowNull: false },
 });

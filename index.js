@@ -19,7 +19,7 @@ app.use("/api", router);
 async function start() {
   try {
     await sequelize.authenticate();
-    await sequelize.sync();
+    await sequelize.sync({ force: true });
     console.log("Connection has been established successfully.");
 
     // https
