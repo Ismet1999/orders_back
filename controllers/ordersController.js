@@ -40,7 +40,7 @@ class OrdersController {
       }
       await Orders.create(order).then((ord) => res.json(ord));
     } catch (err) {
-      next(new ApiError(err.message, 500));
+      next(err);
     }
   }
   async getOne(req, res, next) {
@@ -48,7 +48,7 @@ class OrdersController {
       let order = await Orders.findOne({ where: { id: req.params.id } });
       res.json(order);
     } catch (err) {
-      next(new ApiError(err.message, 500));
+      next(err);
     }
   }
   async edit(req, res, next) {
@@ -64,7 +64,7 @@ class OrdersController {
       });
       res.json(ord);
     } catch (err) {
-      next(new ApiError(err.message, 500));
+      next(err);
     }
   }
   async delete(req, res, next) {
@@ -73,7 +73,7 @@ class OrdersController {
         .then((order) => order.destroy())
         .then(() => res.json({ message: "order deleted" }));
     } catch (err) {
-      next(new ApiError(err.message, 500));
+      next(err);
     }
   }
 }
