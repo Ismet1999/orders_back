@@ -34,7 +34,7 @@ class AuthController {
       if (req.user.exp - req.user.iat < 3600) return res.sendStatus(401);
       let tokens = generateAccessToken({
         name: req.user.name,
-        role: user.role,
+        role: req.user.role,
       });
       res.json(tokens);
     } catch (err) {
