@@ -12,5 +12,16 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+function refreshToken(req, res, next) {
+  const refreshToken = req.body.refreshToken;
+  if (refreshToken == null) return res.sendStatus(401);
 
-module.exports = authenticateToken;
+  jwt.verify(refreshToken, process.env.TOKEN_SECRET, (err, user) => {
+    console.log(err);
+    if (err) return res.sendStatus(401);
+    req.user = user;
+    next();
+  });
+}
+
+module.exports = { authenticateToken, refreshToken };

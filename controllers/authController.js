@@ -26,16 +26,19 @@ class AuthController {
         res.json(tokens);
       });
     } catch (err) {
-      next(new ApiError(err.message, 500));
+      next(err);
     }
   }
   async refresh(req, res, next) {
     try {
-      if (req.user.exp - req.user.iat < 3600) return res.sendStatus(403);
-      let tokens = generateAccessToken({ name: req.user.name });
+      if (req.user.exp - req.user.iat < 3600) return res.sendStatus(401);
+      let tokens = generateAccessToken({
+        name: req.user.name,
+        role: user.role,
+      });
       res.json(tokens);
     } catch (err) {
-      next(new ApiError(err.message, 500));
+      next(err);
     }
   }
 }

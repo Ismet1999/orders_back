@@ -5,7 +5,7 @@ const userRouter = require("./user");
 const ordersRouter = require("./orders");
 const statusesRouter = require("./statuses");
 
-const authenticateToken = require("./../middlewares/authMiddleware.js");
+const { authenticateToken } = require("./../middlewares/authMiddleware.js");
 
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
