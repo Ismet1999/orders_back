@@ -23,7 +23,15 @@ class AuthController {
       }).then(async (user) => {
         console.log("user", user.name);
         let tokens = generateAccessToken({ name: user.name, role: user.role });
-        res.json(tokens);
+        let userData = {
+          name: user.name,
+          role: user.role,
+        };
+        let data = {
+          ...tokens,
+          user: userData,
+        };
+        res.json(data);
       });
     } catch (err) {
       next(err);
