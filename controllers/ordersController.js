@@ -58,9 +58,7 @@ class OrdersController {
       };
       if (req.file && req.file.path) {
         order.photo = req.file.path;
-      } else {
-        order.photo = "";
-      }
+      } 
       let ord = await Orders.update(order, {
         where: { id: req.params.id },
       });
