@@ -35,7 +35,7 @@ class OrdersController {
       let order = {
         ...req.body,
       };
-      if (req.file.path) {
+      if (req.file && req.file.path) {
         order.photo = req.file.path;
       }
       await Orders.create(order).then((ord) => res.json(ord));
